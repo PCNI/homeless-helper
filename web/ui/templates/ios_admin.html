@@ -1,0 +1,58 @@
+{% include 'header.html' %}
+    <div class="row-fluid">
+        <div class="span4"><p></p></div>
+        <div class="span4">
+            {% if admin_status is False %}
+                <center>
+                    <h5>Caregivers can update information and real-time bed availability</h5>                    
+                    <br />
+                    <p>If you already have a PIN code? Enter it here</p>
+                    <form action="/ios/admin" method="get">
+                        <input type="tel" class="input" id="admin_code" name="admin_code">
+                        <br />
+                        <button type="submit" class="btn btn-info btn-large">Continue</button>
+                    </form>    
+                    <br />
+                    <h3>Or, <a href="/ios/shelter/register">register</a> a new resource</h3>
+                </center>
+
+            {% else %}
+                <center>
+                    <h3>{{ resource_object['name_1'] }}</h3>
+                    <h5>{{ resource_object['street_1'] }} {{ resource_object['city'] }} {{ resource_object['state'] }}</h5>
+
+                    {% if resource_object['resource_type'] == 'shelter' %}
+                        <h4>Current beds available:</h4>                    
+                        <h1>{{ resource_object['beds'] }}</h1>
+                        <table>
+                            <tr>
+                                <td>
+                                    <a href="/ios/admin?addbed=1" class="btn btn-success btn-large"><i class="icon-plus"></i></a>
+                                </td>
+                                <td><p></p></td>
+                                <td>
+                                    <a href="/ios/admin?delbed=1" class="btn btn-danger btn-large"><i class="icon-minus"></i></a>
+                                </td>
+                            </tr>
+                        </table>
+
+                    {% end %}
+                    
+                    <br /><br />
+
+                    {% if access_level == 'admin' %}
+                        <a href="/ios/admin/update" class="btn">Modify Info</a>
+                    {% end %}
+                    <br />
+                    <br />
+                    <a href="/ios/admin?logout=1" class="btn">Logout</a>
+                    <br />
+
+                </center>
+            {% end %}
+            
+        </div>
+        <div class="span4"><p></p></div>
+    </div>
+        
+<br /><br />

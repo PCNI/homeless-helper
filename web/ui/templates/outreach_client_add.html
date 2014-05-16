@@ -1,0 +1,65 @@
+{% include 'header.html' %}
+<br />
+<div class="hero-unit">
+    {% include 'navbar.html' %} 
+
+
+    <br /><br />
+    
+    <div class="well">
+    <center>
+        <h2>Outreach</h2>
+        
+    </div>
+
+    {% if error is True %}
+        <center><h3>Login</h3></center>
+        <br />
+        <br />
+        <form action="/outreach" method="post">
+            <center>
+                Username: <input type="text" name="username" id="username" value="" />
+                <br />
+                <br />
+                Password: <input type="password" name="password" id="password" value="" />
+                <br />
+                <br />
+            </center>
+            <center>
+                <button type="submit" name="submit" class="btn btn-info">Login</button>
+            </center>
+        </form>
+            {% else %}
+                <form action="/outreach/client/add" method="post">
+                    <center>
+                        Birthdate: <input type="text" name="dob" id="dob" value="" />
+                        <br />
+                        <br />
+
+                        Ethnicity: <input type="text" name="ethnicity" id="ethnicity" value="" />
+                        <br />
+                        <br />
+
+                        Gender: <input type="text" name="gender" id="gender" value="" />
+                        <br />
+                        <br />
+
+                        First Name: <input type="text" name="name_first" id="name_first" value="" />
+                        <br />
+                        <br />
+
+                        Middle Name: <input type="text" name="name_middle" id="name_middle" value="" />
+                        <br />
+                        <br />
+
+                        Last Name: <input type="text" name="name_last" id="name_last" value="" />
+                        <br />
+                        <br />
+                    </center>
+                    <center>
+                        <button type="submit" name="submit" class="btn btn-info">Go</button>
+                    </center>
+                </form>
+            {% end %}
+</div>
+{% include 'footer.html' %}    

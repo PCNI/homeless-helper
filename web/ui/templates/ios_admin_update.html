@@ -1,0 +1,136 @@
+{% include 'header.html' %}
+    
+            {% if admin_status is False %}
+                <center>
+                    <h5>Caregivers can update information and real-time bed availability</h5>                    
+                    <br />
+                    <p>If you already have a PIN code? Enter it here</p>
+                    <form action="/ios/admin" method="get">
+                        <input type="tel" class="input" id="admin_code" name="admin_code">
+                        <br />
+                        <button type="submit" class="btn btn-info btn-large">Continue</button>
+                    </form>    
+                    <br />
+                    <h3>Or, <a href="/ios/shelter/register">register</a> a new resource</h3>
+                </center>
+            {% else %}
+
+                <form id="modifyResourceForm" action="/ios/admin/update" method="post">
+                    <center>
+                        
+                        <div class="control-group">
+                            <label class="control-label" for="name_1">Name</label>
+                            <div class="controls">
+                                <input type="text" name="name_1" id="name_1" value="{{ resource_object['name_1'] }}">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="name_2">Secondary Name</label>
+                            <div class="controls">
+                                <input type="text" name="name_2" id="name_2" value="{{ resource_object['name_2'] }}">
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label class="control-label" for="street_1">Street</label>
+                            <div class="controls">
+                                <input type="text" name="street_1" id="street_1"  value="{{ resource_object['street_1'] }}">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="street_2">Suite/Apt/Floor</label>
+                            <div class="controls">
+                                <input type="text" name="street_2" id="street_2"  value="{{ resource_object['street_2'] }}">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="city">City</label>
+                            <div class="controls">
+                                <input type="text" name="city" id="city"  value="{{ resource_object['city'] }}">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="state">State</label>
+                            <div class="controls">
+                                <input type="text" class="input-mini" name="state" id="state"  value="{{ resource_object['state'] }}">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="zipcode">Zipcode</label>
+                            <div class="controls">
+                                <input type="text" class="input-small" name="zipcode" id="zipcode" value="{{ resource_object['zipcode'] }}">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="phone">Phone number</label>
+                            <div class="controls">
+                                <input type="text" class="input-medium" name="phone" id="phone"  value="{{ resource_object['phone'] }}">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="url">Website</label>
+                            <div class="controls">
+                                <input type="text" name="url" id="url" value="{{ resource_object['url'] }}">
+                            </div>
+                        </div>
+
+
+                        <div class="control-group">
+                            <label class="control-label" for="hours">Hours / availability</label>
+                            <div class="controls">
+                                <input type="text" name="hours" id="hours" value="{{ resource_object['hours'] }}">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="va_status">Veteran services</label>
+                            <div class="controls">
+                                <select name="va_status" id="va_status">
+                                    {% if resource_object['va_status'] == 1 %}
+                                        <option value="0">No</option>
+                                        <option value="1" selected>Yes</option>
+                                    {% else %}
+                                        <option value="0" selected>No</option>
+                                        <option value="1">Yes</option>
+                                    {% end %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="notes">Notes</label>
+                            <div class="controls">
+                                <textarea rows="4" name="notes" id="notes">{{ resource_object['notes'] }}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="email_address">Email</label>
+                            <div class="controls">
+                                <input type="text" name="email_address" id="email_address" value="{{ resource_object['email_address'] }}">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <div class="controls">
+                                <button type="submit" class="btn btn-primary">Done</button>
+                            </div>
+                        </div>
+                    </form>
+            
+            {% end %}
+
+            </div>
+        </div>
+        <div class="span4"><p></p></div>
+    </div>
+        
+
+</div>

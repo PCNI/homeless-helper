@@ -1,0 +1,13 @@
+{% include 'header.html' %}
+<body> 
+    <div data-role="page" id="geo_failed">
+        <div data-theme="b" data-role="header" data-position="fixed">
+            <a data-role="button" data-rel="back" data-transition="fade" data-theme="b" href="/mobile" data-icon="back" data-iconpos="left" class="ui-btn-left">Back</a>
+            <h3>{{ str.capitalize(str(page_name)) }}</h3>
+        </div>
+        <div data-role="content" style="padding: 15px">
+            <h3>Location services must be enabled</h3>
+        </div>
+    </div>
+</body>
+</html>

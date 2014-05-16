@@ -1,0 +1,130 @@
+{% include 'header.html' %}
+<body> 
+    <div data-role="page" id="admin">
+        <div data-theme="b" data-role="header" data-position="fixed">
+            <a data-role="button" data-rel="back" data-transition="fade" data-theme="b" href="/mobile" data-icon="back" data-iconpos="left" class="ui-btn-left">Back</a>
+            <h3>Caregiver</h3>
+            <a data-role="button" data-transition="fade" data-theme="b" href="/mobile" data-icon="home" data-iconpos="left" class="ui-btn-right">Home</a>
+        </div>
+        <div data-role="content" style="padding: 15px">
+            {% if admin_status is False %}
+                <center>
+                    <h3>Enter your PIN code</h3>
+                    <br />
+                    <form action="/mobile/admin" method="get">
+                        <input type="password" class="input-mini" id="admin_code" name="admin_code">
+                        <br />
+                        <br />
+                        <button type="submit" class="btn btn-info btn-large">Continue</button>
+                    </form>    
+                    <br />
+                    <h3>Or, <a href="/mobile/shelter/register">register</a> a new resource</h3>
+                </center>
+
+            {% else %}
+
+
+                <form action="/mobile/admin/update" method="post">
+                    <center>
+                        <label for="name_1">Name:  </label>
+                        <input type="text" name="name_1" id="name_1" value="{{ resource_object['name_1'] }}" />
+                        <br />
+                        <br />
+
+                        <label for="name_2">Secondary name:  </label>
+                        <input type="text" name="name_2" id="name_2" value="{{ resource_object['name_2'] }}" />
+                        <br />
+                        <br />
+
+
+                        <label for="street_1">Street:  </label>
+                        <input type="text" name="street_1" id="street_1" value="{{ resource_object['street_1'] }}" />
+                        <br />
+                        <br />
+
+                        <label for="street_2">Suite/Apt/Floor:  </label>
+                        <input type="text" name="street_2" id="street_2" value="{{ resource_object['street_2'] }}" />
+                        <br />
+                        <br />
+
+                        <label for="city">City:  </label>
+                        <input type="text" name="city" id="city" value="{{ resource_object['city'] }}" />
+                        <br />
+                        <br />
+
+                        <label for="state">State:  </label>
+                        <input type="text" name="state" id="state" value="{{ resource_object['state'] }}" />
+                        <br />
+                        <br />
+
+                        <label for="zipcode">Zipcode:  </label>
+                        <input type="text" name="zipcode" id="zipcode" value="{{ resource_object['zipcode'] }}" />
+                        <br />
+                        <br />
+
+                        <label for="phone">Phone number:  </label>
+                        <input type="text" name="phone" id="phone" value="{{ resource_object['phone'] }}" />
+                        <br />
+                        <br />
+
+                        <label for="url">Website:  </label>
+                        <input type="text" name="url" id="url" value="{{ resource_object['url'] }}" />
+                        <br />
+                        <br />
+
+                        <label for="hours">Hours / Availability:  </label>
+                        <input type="text" name="hours" id="hours" value="{{ resource_object['hours'] }}" />
+                        <br />
+                        <br />
+
+                        <label for="notes">Notes:  </label>
+                        <input type="text" name="notes" id="notes" value="{{ resource_object['notes'] }}" />
+                        <br />
+                        <br />
+
+                        <label for="va">VA Specific Services:  </label>
+                        {% if resource_object['va_status'] == 1 %}
+                            <label class="radio">
+                              <input type="radio" name="va_status" id="va_status1" value="1" checked>
+                              Yes
+                            </label>
+                            <label class="radio">
+                              <input type="radio" name="va_status" id="va_status2" value="0">
+                              No
+                            </label>
+                        {% else %}
+                            <label class="radio">
+                              <input type="radio" name="va_status" id="va_status1" value="1">
+                              Yes
+                            </label>
+                            <label class="radio">
+                              <input type="radio" name="va_status" id="va_status2" value="0" checked>
+                              No
+                            </label>
+                        {% end %}
+                        <br />
+                        <br />
+
+
+                        <label for="email_address">Contact Email Address:  </label>
+                        <input type="text" name="email_address" id="email_address" value="{{ resource_object['email_address'] }}" />
+                        <br />
+                        <br />
+
+                    </center>
+                    <center>
+                        <button type="submit" name="submit" class="btn btn-large btn-info">Submit Changes</button>
+                    </center>
+                </form>            
+            
+            
+            
+            
+            
+            {% end %}
+                    <a href="/mobile/admin" class="btn">Go back</a>
+
+        </div>
+    </div>
+</body>
+</html>

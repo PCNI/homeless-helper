@@ -1,0 +1,55 @@
+{% include 'header.html' %}
+<br />
+<div class="hero-unit">
+    {% include 'navbar.html' %} 
+
+
+    <br /><br />
+    
+    <div class="well">
+    <center>
+        <h2>Outreach</h2>
+        
+    </div>
+
+    {% if error is True %}
+        <center><h3>Login</h3></center>
+        <br />
+        <br />
+        <form action="/outreach" method="post">
+            <center>
+                Username: <input type="text" name="username" id="username" value="" />
+                <br />
+                <br />
+                Password: <input type="password" name="password" id="password" value="" />
+                <br />
+                <br />
+            </center>
+            <center>
+                <button type="submit" name="submit" class="btn btn-info">Login</button>
+            </center>
+        </form>
+    {% elif client_id != '' %}
+        <center>
+            <p>Date of Birth: {{ dob }}</p>
+            <p>Ethnicity: {{ ethnicity }}</p>
+            <p>Gender: {{ gender }}</p>
+            <p>First Name: {{ name_first }}</p>
+            <p>Middle Name: {{ name_middle }}</p>
+            <p>Last Name: {{ name_last }}</p>
+        </center>
+
+    {% else %}
+        <form action="/outreach/client/get" method="post">
+            <center>
+                Client ID: <input type="text" name="client_id" id="client_id" value="" />
+                <br />
+                <br />
+            </center>
+            <center>
+                <button type="submit" name="submit" class="btn btn-info">Go</button>
+            </center>
+        </form>
+    {% end %}
+</div>
+{% include 'footer.html' %}    

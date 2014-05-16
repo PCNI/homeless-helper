@@ -1,0 +1,130 @@
+{% include 'header.html' %}
+<br />
+
+    {% if done == '1' %}
+        <center>
+            <p><strong>Thank you!</strong></p>
+            <p>You will receive an email very soon containing your PIN code</p>
+        </center>
+        
+    {% else %}
+        <div class="well">
+        <center>
+            <p><strong>Fill in the form below to register a new resource</strong></p>
+            <p>You will receive a PIN code that will allow you to update this information anytime</p>
+        </center>
+        <br />
+        <br />
+           <div class="row-fluid">
+                <div class="span4"><p> </p></div>
+                <div class="span4">
+                    <form class="form-horizontal" id="newResourceForm" action="/ios/shelter/register" method="post">
+
+                        <div class="control-group">
+                            <label class="control-label" for="resource_type">Resource Type</label>
+                            <div class="controls">
+                                <select name="resource_type" id="resource_type">
+                                    <option value="shelter">Shelter</option>
+                                    <option value="food">Food</option>
+                                    <option value="medical">Medical</option>
+                                    <option value="social">Social</option>
+                                    <option value="legal">Legal</option>
+                                    <option value="hotline">Hotline</option>
+                                    <option value="employment">Employment</option>
+                                </select>
+                            </div>
+                        </div>
+                    
+                        <div class="control-group">
+                            <label class="control-label" for="name">Resource</label>
+                            <div class="controls">
+                                <input type="text" name="name" id="name" placeholder="Resource Name">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="address">Street address</label>
+                            <div class="controls">
+                                <input type="text" name="address" id="address"  placeholder="123 Main Street">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="city">City</label>
+                            <div class="controls">
+                                <input type="text" name="city" id="city"  placeholder="Small Town">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="state">State</label>
+                            <div class="controls">
+                                <input type="text" class="input-mini" name="state" id="state"  placeholder="NJ">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="zipcode">Zipcode</label>
+                            <div class="controls">
+                                <input type="text" class="input-small" name="zipcode" id="zipcode"  placeholder="12345">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="phone">Phone number</label>
+                            <div class="controls">
+                                <input type="text" class="input-medium" name="phone" id="phone"  placeholder="732-555-1234">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="url">Website</label>
+                            <div class="controls">
+                                <input type="text" name="url" id="url" placeholder="http://example.com">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="hours">Hours / availability</label>
+                            <div class="controls">
+                                <input type="text" name="hours" id="hours"  placeholder="Mon-Fri 9am-10pm Sat-Sun 10am-9pm">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="va_status">Veteran services</label>
+                            <div class="controls">
+                                <select name="va_status" id="va_status">
+                                    <option value="0">No</option>
+                                    <option value="1">Yes</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="notes">Notes</label>
+                            <div class="controls">
+                                <textarea rows="4" name="notes" id="notes" placeholder="A brief description about the resource"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="email">Email</label>
+                            <div class="controls">
+                                <input type="text" name="email" id="email" placeholder="job@example.com">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <div class="controls">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            <div class="span4"><p> </p></div>            
+        </div>
+        </div>
+    {% end %}
+
+

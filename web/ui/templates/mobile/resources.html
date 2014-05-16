@@ -1,0 +1,44 @@
+{% include 'header.html' %}
+<body> 
+    <div data-role="page" id="resources">
+        <div data-theme="b" data-role="header" data-position="fixed">
+            <a data-role="button" data-rel="back" data-transition="fade" data-theme="b" href="/mobile" data-icon="back" data-iconpos="left" class="ui-btn-left">Back</a>
+            <h3>{{ str.capitalize(str(page_name)) }}</h3>
+            <a data-role="button" data-transition="fade" data-theme="b" href="/mobile/geo_search" data-icon="search" data-iconpos="left" class="ui-btn-right">Search</a>
+        </div>
+        <div data-role="content" style="padding: 15px">
+            <ul data-role="listview" data-theme="g">
+                {% for r in resource_objects %}            
+            	    <li><a href="/mobile/resource_profile?resource_id={{ r['_id'] }}">{{ r['name_1'] }}</a></li>
+                {% end %}
+            </ul>            
+
+            
+            {% if r['resource_type'] == 'employment' %}
+
+                <br />
+                    
+                <center><h4>Local job and volunteer posts</h4></center>
+                <br />
+                <center><a href="/mobile/job/new" class="btn">Add Opportunity</a></center>
+                <br />
+                <ul data-role="listview" data-theme="g">
+                    {% for r in job_gig %}            
+                	    <li><a href="/mobile/resource_profile?resource_id={{ r['_id'] }}">{{ r['title'] }}</a></li>
+                    {% end %}
+                </ul>            
+
+                <br />
+                <center><h4>Internet job listings</h4></center>
+                <ul data-role="listview" data-theme="g">
+                    {% for r in jobs %}            
+                	    <li><a href="/mobile/resource_profile?resource_id={{ r['_id'] }}">{{ r['name_1'] }}</a></li>
+                    {% end %}
+                </ul>            
+
+            {% end %}
+
+        </div>
+    </div>
+</body>
+</html>

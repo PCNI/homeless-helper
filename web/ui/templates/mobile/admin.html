@@ -1,0 +1,68 @@
+{% include 'header.html' %}
+<body> 
+    <div data-role="page" id="admin">
+        <div data-theme="b" data-role="header" data-position="fixed">
+            <a data-role="button" data-rel="back" data-transition="fade" data-theme="b" href="/mobile" data-icon="back" data-iconpos="left" class="ui-btn-left">Back</a>
+            <h3>Caregiver</h3>
+            <a data-role="button" data-transition="fade" data-theme="b" href="/mobile" data-icon="home" data-iconpos="left" class="ui-btn-right">Home</a>
+        </div>
+        <div data-role="content" style="padding: 15px">
+            {% if admin_status is False %}
+                <center>
+                    <h5>Caregivers can update information and real-time bed availability</h5>
+                    <br />
+                    <p>If you already have a PIN code? Enter it here</p>
+                    <form action="/mobile/admin" method="get">
+                        <input type="password" class="input-mini" id="admin_code" name="admin_code">
+                        <br />
+                        <button type="submit" class="btn btn-info btn-large">Continue</button>
+                    </form>    
+                    <br />
+                    <h3>Or, <a href="/mobile/shelter/register">register</a> a new resource</h3>
+                    <br />
+                    <h4><a href="#" onClick="geo_employment();">Click here</a> to find local volunteer opportunities</h4>
+                </center>
+
+            {% else %}
+                <center>
+                    <h3>{{ resource_object['name_1'] }}</h3>
+                    <h5>{{ resource_object['street_1'] }} {{ resource_object['city'] }} {{ resource_object['state'] }}</h5>
+                    <br />
+                    {% if resource_object['resource_type'] == 'shelter' %}
+                        <h4>Current beds available:</h4>                    
+                        <h1>{{ resource_object['beds'] }}</h1>
+                        <table>
+                            <tr>
+                                <td>
+                                    <form action="/mobile/admin?addbed=1" method="get">
+                                        <input class="btn btn-success" type="submit" value="Add">
+                                    </form>
+                                </td>
+                                <td style="width:60px;"><p></p></td>
+                                <td>
+                                    <form action="/mobile/admin?delbed=1" method="get">
+                                        <input class="btn btn-danger" type="submit" value="Subtract">
+                                    </form>
+                                </td>
+                            </tr>
+                        </table>
+
+                    {% end %}
+                    
+                    <br />
+
+                    {% if access_level == 'admin' %}
+                        <a href="/mobile/admin/update" class="btn">Modify Info</a>
+                    {% end %}
+                    <br />
+                    <br />
+                    <a href="/mobile/admin?logout=1" class="btn">Logout</a>
+                    <br />
+
+                </center>
+            {% end %}
+
+        </div>
+    </div>
+</body>
+</html>

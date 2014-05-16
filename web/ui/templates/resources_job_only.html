@@ -1,0 +1,114 @@
+{% include 'header.html' %}
+<br />
+<div class="hero-unit">
+    {% include 'navbar.html' %} 
+    <br />
+
+    <a href="/" class="pull-left btn">Home</a>
+    {% if page_name != 'employment' %}
+        <a href="/shelter/register" class="pull-right btn btn-danger">Add Resource</a>
+    {% else %}
+        <a href="/job/new" class="pull-right btn btn-danger">Add Job or Volunteer Opportunity</a>
+    {% end %}
+    <br />
+    <br />
+    <br />
+    <div class="well">
+
+
+    {% if page_name != 'hotline' %}
+        <center>
+            <p>Showing <strong>{{ page_name }}</strong> resources near <strong>{{ full_address }}</strong></p>
+            <br />
+            <br />
+            <h5>Search by address, city, state or zipcode</h5>
+            <form action="/resources" method="get">
+                <input type="hidden" name="kind" id="kind" value="{{ page_name }}" />            
+                <input type="text" name="query" class="input-xlarge search-query" placeholder="Enter an address">
+                <button type="submit" class="btn">Change Location</button>            
+            </form>
+        </center>
+        <br />    
+        <br />
+    {% end %}
+
+    {% if page_name == 'hotline' %}
+        <center><img src="/static/images/va_VeteransCrisisLineLogo.png" /></center>
+        <br />
+    {% end %}
+    
+    
+
+    <br /><br />
+    
+    <div class="well">
+    <a name="volunteer"></a>
+    <center>
+        <h2>Local Job and Volunteer Opportunities</h2>
+        <h5>Posted specifically for Homeless Helper users</h5>
+    </center>
+
+    <br /><br />
+
+    <div class="row-fluid">
+        <div class="span2"><p></p></div>
+        <div class="span8">
+            <center>
+                <table class="table">
+
+                    {% for b in job_gig %}
+                        <tr>
+                            <td>
+                                <center>
+                                    <a href="/resource_profile?resource_id={{ b['_id'] }}"><p><strong>{{ b['title'] }}</strong></p></a>
+                                </center>
+                            </td>
+                        </tr>
+                    {% end %}
+                </table>
+            </center>
+        </div>
+        <div class="span2"><p></p></div>
+    </div>
+    </div>
+
+    <br /><br />
+
+    <center>
+        <h2>Local Job Listings</h2>
+        <h5>(click any job for more info)</h5>
+    </center>
+
+    <div class="row-fluid">
+        <div class="span2"><p></p></div>
+        <div class="span8">
+            <center>
+                <table class="table">
+
+                    {% for c in jobs %}
+                        <tr>
+                            <td>
+                                <center>
+                                    <a href="/resource_profile?resource_id={{ c['_id'] }}"><p><strong>{{ c['name_1'] }}</strong></p></a>
+                                </center>
+                            </td>
+                        </tr>
+                    {% end %}
+                </table>
+            </center>
+        </div>
+        <div class="span2"><p></p></div>
+    </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+</div>
+{% include 'footer.html' %}    

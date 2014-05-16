@@ -1,0 +1,194 @@
+{% include 'header.html' %}
+<body> 
+    <div data-role="page" id="resource_profile">
+        <div data-theme="b" data-role="header" data-position="fixed">
+            <a data-role="button" data-rel="back" data-transition="fade" data-theme="b" href="/mobile" data-icon="back" data-iconpos="left" class="ui-btn-left">Back</a>
+
+            {% if resource_object['resource_type'] == 'job_gig' %}
+                <h3>{{ str.capitalize(str(resource_object['title'])) }}</h3>
+            {% else %}
+                <h3>{{ str.capitalize(str(resource_object['name_1'])) }}</h3>
+            {% end %}
+        </div>
+        <div data-role="content" style="padding: 15px">
+                            
+            {% if resource_object['resource_type'] == 'job' %}
+                <iframe id="frame" src="{{ resource_object['url'] }}" width="100%" height="500px" frameborder="0" marginheight="0" marginwidth="0"></iframe>
+            {% end %}
+
+            {% if resource_object['resource_type'] == 'job_gig' %}
+                <center><h4>{{ resource_object['title'] }}</h4></center>
+                <center>
+                    <img src="http://maps.google.com/maps/api/staticmap?zoom=14&size=200x200&maptype=roadmap&markers=color:blue|label:|{{ resource_object['location'][0] }},{{ resource_object['location'][1] }}&sensor=false" />
+                </center>
+                <p><img src="/static/images/mobile/glyphs/house.png" />  {{ resource_object['address'] }} {{ resource_object['city'] }} {{ resource_object['state'] }} {{ resource_object['zipcode'] }}</p>
+                <p><img src="/static/images/mobile/glyphs/phone.png" /> <a href="tel:{{ resource_object['phone'] }}">{{ resource_object['phone'] }}</a></p>
+                {% if resource_object['description'] is not None and resource_object['description'] != '' %}
+                    <p><strong>Description:</strong>  {{ resource_object['description'] }}</p>
+                {% end %}
+                <center>
+                    <a href="http://maps.google.com/?q={{ resource_object['address'] }},{{ resource_object['city'] }},{{ resource_object['state'] }},{{ resource_object['zipcode'] }}" target="_blank" data-role="button">Directions</a>
+                    <a href="mailto:?subject={{ resource_object['title'] }}&body={{ resource_object['title'] }} - {{ resource_object['address'] }} {{ resource_object['city'] }}, {{ resource_object['state'] }} - {{ resource_object['phone'] }}" data-role="button">Share</a>
+                </center>
+            {% end %}
+                
+            {% if resource_object['resource_type'] == 'employment' %}
+                <center><h4>{{ resource_object['name_1'] }}</h4></center>
+                <center>
+                    <img src="http://maps.google.com/maps/api/staticmap?zoom=14&size=200x200&maptype=roadmap&markers=color:blue|label:|{{ resource_object['location'][0] }},{{ resource_object['location'][1] }}&sensor=false" />
+                </center>
+                {% if resource_object['va_status'] == '1' %}
+                    <center><img src="/static/images/va-logo.png" /></center>
+                {% end %}
+                <p><img src="/static/images/mobile/glyphs/house.png" />  {{ resource_object['street_1'] }} {{ resource_object['city'] }} {{ resource_object['state'] }} {{ resource_object['zipcode'] }}</p>
+                <p><img src="/static/images/mobile/glyphs/phone.png" /> <a href="tel:{{ resource_object['phone'] }}">{{ resource_object['phone'] }}</a></p>
+                {% if resource_object['hours'] is not None %}
+                    <p><img src="/static/images/mobile/glyphs/clock.png" />  {{ resource_object['hours'] }}</p>
+                {% end %}
+                {% if resource_object['notes'] is not None and resource_object['notes'] != '' %}
+                    <p><strong>Notes:</strong>  {{ resource_object['notes'] }}</p>
+                {% end %}
+                <center>
+                    <a href="http://maps.google.com/?q={{ resource_object['street_1'] }},{{ resource_object['city'] }},{{ resource_object['state'] }},{{ resource_object['zipcode'] }}" target="_blank" data-role="button">Directions</a>
+                    <a href="mailto:?subject={{ resource_object['name_1'] }}&body={{ resource_object['name_1'] }} - {{ resource_object['street_1'] }} {{ resource_object['city'] }}, {{ resource_object['state'] }} - {{ resource_object['phone'] }}" data-role="button">Share</a>
+                </center>
+            {% end %}
+
+            {% if resource_object['resource_type'] == 'shelter' %}
+                <center><h4>{{ resource_object['name_1'] }}</h4></center>
+                <center>
+                    <img src="http://maps.google.com/maps/api/staticmap?zoom=14&size=200x200&maptype=roadmap&markers=color:blue|label:|{{ resource_object['location'][0] }},{{ resource_object['location'][1] }}&sensor=false" />
+                </center>
+                {% if resource_object['va_status'] == '1' %}
+                    <center><img src="/static/images/va-logo.png" /></center>
+                {% end %}
+                <p><img src="/static/images/mobile/glyphs/house.png" />  {{ resource_object['street_1'] }} {{ resource_object['city'] }} {{ resource_object['state'] }} {{ resource_object['zipcode'] }}</p>
+                <p><img src="/static/images/mobile/glyphs/phone.png" /> <a href="tel:{{ resource_object['phone'] }}">{{ resource_object['phone'] }}</a></p>
+                {% if resource_object['hours'] is not None %}
+                    <p><img src="/static/images/mobile/glyphs/clock.png" />  {{ resource_object['hours'] }}</p>
+                {% end %}
+                {% if resource_object['notes'] is not None and resource_object['notes'] != '' %}
+                    <p><strong>Notes:</strong>  {{ resource_object['notes'] }}</p>
+                {% end %}
+                <p>Available beds: <span class="badge">{{ resource_object['beds'] }}</span></p>
+                <center>
+                    <a href="http://maps.google.com/?q={{ resource_object['street_1'] }},{{ resource_object['city'] }},{{ resource_object['state'] }},{{ resource_object['zipcode'] }}" target="_blank" data-role="button">Directions</a>
+                    <a href="mailto:?subject={{ resource_object['name_1'] }}&body={{ resource_object['name_1'] }} - {{ resource_object['street_1'] }} {{ resource_object['city'] }}, {{ resource_object['state'] }} - {{ resource_object['phone'] }}" data-role="button">Share</a>
+                </center>
+            {% end %}
+
+            {% if resource_object['resource_type'] == 'medical' %}
+                <center><h4>{{ resource_object['name_1'] }}</h4></center>
+                <center>
+                    <img src="http://maps.google.com/maps/api/staticmap?zoom=14&size=200x200&maptype=roadmap&markers=color:blue|label:|{{ resource_object['location'][0] }},{{ resource_object['location'][1] }}&sensor=false" />
+                </center>
+                {% if resource_object['va_status'] == '1' %}
+                    <center><img src="/static/images/va-logo.png" /></center>
+                {% end %}
+                <p><img src="/static/images/mobile/glyphs/house.png" />  {{ resource_object['street_1'] }} {{ resource_object['city'] }} {{ resource_object['state'] }} {{ resource_object['zipcode'] }}</p>
+                <p><img src="/static/images/mobile/glyphs/phone.png" /> <a href="tel:{{ resource_object['phone'] }}">{{ resource_object['phone'] }}</a></p>
+                {% if resource_object['hours'] is not None %}
+                    <p><img src="/static/images/mobile/glyphs/clock.png" />  {{ resource_object['hours'] }}</p>
+                {% end %}
+                {% if resource_object['notes'] is not None and resource_object['notes'] != '' %}
+                    <p><strong>Notes:</strong>  {{ resource_object['notes'] }}</p>
+                {% end %}
+                <center>
+                    <a href="http://maps.google.com/?q={{ resource_object['street_1'] }},{{ resource_object['city'] }},{{ resource_object['state'] }},{{ resource_object['zipcode'] }}" target="_blank" data-role="button">Directions</a>
+                    <a href="mailto:?subject={{ resource_object['name_1'] }}&body={{ resource_object['name_1'] }} - {{ resource_object['street_1'] }} {{ resource_object['city'] }}, {{ resource_object['state'] }} - {{ resource_object['phone'] }}" data-role="button">Share</a>
+                </center>
+            {% end %}
+
+            {% if resource_object['resource_type'] == 'legal' %}
+                <center><h4>{{ resource_object['name_1'] }}</h4></center>
+                <center>
+                    <img src="http://maps.google.com/maps/api/staticmap?zoom=14&size=200x200&maptype=roadmap&markers=color:blue|label:|{{ resource_object['location'][0] }},{{ resource_object['location'][1] }}&sensor=false" />
+                </center>
+                {% if resource_object['va_status'] == '1' %}
+                    <center><img src="/static/images/va-logo.png" /></center>
+                {% end %}
+                <p><img src="/static/images/mobile/glyphs/house.png" />  {{ resource_object['street_1'] }} {{ resource_object['city'] }} {{ resource_object['state'] }} {{ resource_object['zipcode'] }}</p>
+                <p><img src="/static/images/mobile/glyphs/phone.png" /> <a href="tel:{{ resource_object['phone'] }}">{{ resource_object['phone'] }}</a></p>
+                {% if resource_object['hours'] is not None %}
+                    <p><img src="/static/images/mobile/glyphs/clock.png" />  {{ resource_object['hours'] }}</p>
+                {% end %}
+                {% if resource_object['notes'] is not None and resource_object['notes'] != '' %}
+                    <p><strong>Notes:</strong>  {{ resource_object['notes'] }}</p>
+                {% end %}
+                <center>
+                    <a href="http://maps.google.com/?q={{ resource_object['street_1'] }},{{ resource_object['city'] }},{{ resource_object['state'] }},{{ resource_object['zipcode'] }}" target="_blank" data-role="button">Directions</a>
+                    <a href="mailto:?subject={{ resource_object['name_1'] }}&body={{ resource_object['name_1'] }} - {{ resource_object['street_1'] }} {{ resource_object['city'] }}, {{ resource_object['state'] }} - {{ resource_object['phone'] }}" data-role="button">Share</a>
+                </center>
+            {% end %}
+
+            {% if resource_object['resource_type'] == 'food' %}
+                <center><h4>{{ resource_object['name_1'] }}</h4></center>
+                <center>
+                    <img src="http://maps.google.com/maps/api/staticmap?zoom=14&size=200x200&maptype=roadmap&markers=color:blue|label:|{{ resource_object['location'][0] }},{{ resource_object['location'][1] }}&sensor=false" />
+                </center>
+                {% if resource_object['va_status'] == '1' %}
+                    <center><img src="/static/images/va-logo.png" /></center>
+                {% end %}
+                <p><img src="/static/images/mobile/glyphs/house.png" />  {{ resource_object['street_1'] }} {{ resource_object['city'] }} {{ resource_object['state'] }} {{ resource_object['zipcode'] }}</p>
+                <p><img src="/static/images/mobile/glyphs/phone.png" /> <a href="tel:{{ resource_object['phone'] }}">{{ resource_object['phone'] }}</a></p>
+                {% if resource_object['hours'] is not None %}
+                    <p><img src="/static/images/mobile/glyphs/clock.png" />  {{ resource_object['hours'] }}</p>
+                {% end %}
+                {% if resource_object['notes'] is not None and resource_object['notes'] != '' %}
+                    <p><strong>Notes:</strong>  {{ resource_object['notes'] }}</p>
+                {% end %}
+                <center>
+                    <a href="http://maps.google.com/?q={{ resource_object['street_1'] }},{{ resource_object['city'] }},{{ resource_object['state'] }},{{ resource_object['zipcode'] }}" target="_blank" data-role="button">Directions</a>
+                    <a href="mailto:?subject={{ resource_object['name_1'] }}&body={{ resource_object['name_1'] }} - {{ resource_object['street_1'] }} {{ resource_object['city'] }}, {{ resource_object['state'] }} - {{ resource_object['phone'] }}" data-role="button">Share</a>
+                </center>
+            {% end %}
+
+            {% if resource_object['resource_type'] == 'social' %}
+                <center><h4>{{ resource_object['name_1'] }}</h4></center>
+                <center>
+                    <img src="http://maps.google.com/maps/api/staticmap?zoom=14&size=200x200&maptype=roadmap&markers=color:blue|label:|{{ resource_object['location'][0] }},{{ resource_object['location'][1] }}&sensor=false" />
+                </center>
+                {% if resource_object['va_status'] == '1' %}
+                    <center><img src="/static/images/va-logo.png" /></center>
+                {% end %}
+                <p><img src="/static/images/mobile/glyphs/house.png" />  {{ resource_object['street_1'] }} {{ resource_object['city'] }} {{ resource_object['state'] }} {{ resource_object['zipcode'] }}</p>
+                <p><img src="/static/images/mobile/glyphs/phone.png" /> <a href="tel:{{ resource_object['phone'] }}">{{ resource_object['phone'] }}</a></p>
+                {% if resource_object['hours'] is not None %}
+                    <p><img src="/static/images/mobile/glyphs/clock.png" />  {{ resource_object['hours'] }}</p>
+                {% end %}
+                {% if resource_object['notes'] is not None and resource_object['notes'] != '' %}
+                    <p><strong>Notes:</strong>  {{ resource_object['notes'] }}</p>
+                {% end %}
+                <center>
+                    <a href="http://maps.google.com/?q={{ resource_object['street_1'] }},{{ resource_object['city'] }},{{ resource_object['state'] }},{{ resource_object['zipcode'] }}" target="_blank" data-role="button">Directions</a>
+                    <a href="mailto:?subject={{ resource_object['name_1'] }}&body={{ resource_object['name_1'] }} - {{ resource_object['street_1'] }} {{ resource_object['city'] }}, {{ resource_object['state'] }} - {{ resource_object['phone'] }}" data-role="button">Share</a>
+                </center>
+            {% end %}
+
+            {% if resource_object['resource_type'] == 'hotline' %}
+                <center><h4>{{ resource_object['name_1'] }}</h4></center>
+                <center>
+                    <img src="http://maps.google.com/maps/api/staticmap?zoom=14&size=200x200&maptype=roadmap&markers=color:blue|label:|{{ resource_object['location'][0] }},{{ resource_object['location'][1] }}&sensor=false" />
+                </center>
+                {% if resource_object['va_status'] == '1' %}
+                    <center><img src="/static/images/va-logo.png" /></center>
+                {% end %}
+                <p><img src="/static/images/mobile/glyphs/phone.png" /> <a href="tel:{{ resource_object['phone'] }}">{{ resource_object['phone'] }}</a></p>
+                {% if resource_object['hours'] is not None %}
+                    <p><img src="/static/images/mobile/glyphs/clock.png" />  {{ resource_object['hours'] }}</p>
+                {% end %}
+                {% if resource_object['notes'] is not None and resource_object['notes'] != '' %}
+                    <p><strong>Notes:</strong>  {{ resource_object['notes'] }}</p>
+                {% end %}
+                <center>
+                    <a href="mailto:?subject={{ resource_object['name_1'] }}&body={{ resource_object['name_1'] }} - {{ resource_object['phone'] }}" class="btn btn-success">Share</a>
+                </center>
+            {% end %}
+
+
+
+
+	    </div><!-- /content -->
+    </div><!-- /page -->
+</body>
+</html>

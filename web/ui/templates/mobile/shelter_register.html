@@ -1,0 +1,126 @@
+{% include 'header.html' %}
+<body> 
+    <div data-role="page" id="register_shelter">
+        <div data-theme="b" data-role="header" data-position="fixed">
+            <a data-role="button" data-rel="back" data-transition="fade" data-theme="b" href="/mobile" data-icon="back" data-iconpos="left" class="ui-btn-left">Back</a>
+            <h3>Register Shelter</h3>
+        </div>
+        <div data-role="content" style="padding: 15px">
+
+    
+    {% if done == '1' %}
+        <center>
+            <p>You will receive an email very soon containing your PIN code</p>
+        </center>
+    {% else %}
+    <center>
+        <h2>Register a new resource</h2>
+        <br />
+        <p><strong>Fill in the form below to register a new resource</strong></p>
+        <p>You will receive a PIN code that will allow you to update this information anytime</p>
+    </center>
+        <br />
+        <br />
+
+        <form action="/mobile/shelter/register" method="post">
+<center>
+    
+            <label for="resource_type">Resource Type:  </label>
+                <label class="radio">
+                  <input type="radio" name="resource_type" id="resource_type_shelter" value="shelter">
+                  Shelter
+                </label>
+                <label class="radio">
+                  <input type="radio" name="resource_type" id="resource_type_food" value="food">
+                  Food
+                </label>
+                <label class="radio">
+                  <input type="radio" name="resource_type" id="resource_type_medical" value="medical">
+                  Medical
+                </label>
+                <label class="radio">
+                  <input type="radio" name="resource_type" id="resource_type_legal" value="legal">
+                  Legal
+                </label>
+                <label class="radio">
+                  <input type="radio" name="resource_type" id="resource_type_hotline" value="hotline">
+                  Hotline
+                </label>
+                <label class="radio">
+                  <input type="radio" name="resource_type" id="resource_type_social" value="social">
+                  Social
+                </label>
+                <label class="radio">
+                  <input type="radio" name="resource_type" id="resource_type_employment" value="employment">
+                  Employment
+                </label>
+            <br />
+            <br />
+    
+            Resource name: <input type="text" name="name" id="name" value="" />
+            <br />
+            <br />
+
+            Street address: <input type="text" name="address" id="address" value="" />
+            <br />
+            <br />
+
+            City: <input type="text" name="city" id="city" value="" />
+            <br />
+            <br />
+
+            State: <input type="text" name="state" id="state" value="" />
+            <br />
+            <br />
+
+            Zipcode: <input type="text" name="zipcode" id="zipcode" value="" />
+            <br />
+            <br />
+
+            Phone number: <input type="text" name="phone" id="phone" value="" />
+            <br />
+            <br />
+
+            Website: <input type="text" name="url" id="url" value="" />
+            <br />
+            <br />
+
+            Hours / Availability: <input type="text" name="hours" id="hours" value="" />
+            <br />
+            <br />
+
+            <label for="va">Do you offer specific services for Veterans of the Armed Forces?:  </label>
+            <label class="radio">
+              <input type="radio" name="va_status" id="va_status1" value="1" checked>
+              Yes
+            </label>
+            <label class="radio">
+              <input type="radio" name="va_status" id="va_status2" value="0">
+              No
+            </label>
+            <br />
+            <br />
+
+            Notes: <input type="text" name="notes" id="notes" value="" />
+            <br />
+            <br />
+
+            Email:
+            <input type="text" name="email" id="email" value="" />
+            <br />
+            <br />
+</center>
+            <center>
+                <button type="submit" name="submit" class="btn btn-info">Submit Registration</button>
+            </center>
+        </form>
+    {% end %}
+
+<br /><br /><br />
+
+	</div><!-- /content -->
+
+</div><!-- /page -->
+
+</body>
+</html>

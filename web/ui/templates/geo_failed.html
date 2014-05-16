@@ -1,0 +1,29 @@
+{% include 'header.html' %}
+<br />
+<div class="hero-unit">
+    {% include 'navbar.html' %} 
+
+
+    <br /><br />
+    
+    <div class="well">
+    <center>
+        <h2>{{ str.capitalize(str(page_name)) }}</h2>
+    </center>
+
+    <br /><br />
+
+    <div class="row-fluid">
+        <div class="span2"><p></p></div>
+        <div class="span8">
+            <center>
+                <h3>Geo location must be enabled</h3>
+            </center>
+        </div>
+        <div class="span2"><p></p></div>
+    </div>
+    </div>
+
+
+</div>
+{% include 'footer.html' %}    

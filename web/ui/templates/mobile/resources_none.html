@@ -1,0 +1,40 @@
+{% include 'header.html' %}
+<body> 
+    <div data-role="page" id="geo_search">
+        <div data-theme="b" data-role="header" data-position="fixed">
+            <a data-role="button" data-rel="back" data-transition="fade" data-theme="b" href="/mobile" data-icon="back" data-iconpos="left" class="ui-btn-left">Back</a>
+            <a data-role="button" data-transition="fade" data-theme="b" href="/mobile" data-icon="home" data-iconpos="left" class="ui-btn-right">Home</a>
+            <h3>Resource Search</h3>
+        </div>
+        <div data-role="content" style="padding: 15px">
+            
+            <center><h3>No resources found</h3></center>
+            <br />
+
+            <form action="/mobile/resources" method="get">
+
+                <div id="querydiv" data-role="fieldcontain">
+                  <label for="query">Location</label>	
+                  <input type="text" name="query" id="query" value="" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset">
+                </div>
+
+              <div id="kinddiv" data-role="fieldcontain">
+                <label id="kind" for="state">Category</label>		
+                <select id="kind" name="kind" tabindex="2">
+        					<option value="shelter">Shelter</option>
+        					<option value="food">Food</option>
+        					<option value="social">Social</option>
+        					<option value="legal">Legal</option>
+        					<option value="medical">Medical</option>
+        					<option value="hotline">Hotline</option>
+        					<option value="employment">Employment</option>
+                </select>
+              </div>
+
+
+                <button type="submit" name="submit" class="btn btn-large btn-info">Go</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

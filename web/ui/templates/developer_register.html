@@ -1,0 +1,40 @@
+{% include 'header.html' %}
+<br />
+<div class="hero-unit">
+    {% include 'navbar.html' %} 
+
+    <br /><br />
+
+    {% if done == '1' %}
+        <center>
+            <h3>Your registration is processing!</h3> 
+            <h5>You will receive an email within several minutes containing your API key.</h5>
+        </center>
+    {% else %}
+    <center>
+        <h2>Request API key</h2>
+        <br />
+        <p>Fill in the info below to request a new API key. Please read the <a href="/developer">API Guide</a> before using the API.</p>
+    </center>
+        <br /><br />
+        <center>
+        <form action="/developer/register" method="post">
+
+            <label for="name">Your name:  </label>
+            <input type="text" name="name" id="name" value="" />
+            <br />
+            <br />
+
+            <label for="email">Your email address:  </label>
+            <input type="text" name="email" id="email" value="" />
+            <br />
+            <br />
+            
+            <center>
+                <button type="submit" name="submit" class="btn btn-info">Submit</button>
+            </center>
+        </form>
+        </center>
+    {% end %}
+</div>
+{% include 'footer.html' %}    

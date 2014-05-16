@@ -1,0 +1,81 @@
+{% include 'header.html' %}
+<br />
+<div class="hero-unit">
+    {% include 'navbar.html' %} 
+
+    <br /><br />
+    <a href="/" class="pull-left btn">Home</a>
+    
+    <div class="row-fluid">
+        <div class="span3"><p></p></div>
+        <div class="span6">
+            <div class="well">
+            {% if admin_status is False %}
+                <center>
+                    
+                    <p>Caregivers can update information and real-time bed availability</p>
+                    
+                    <br />
+                    
+                    <h5>If you already have a PIN code? Enter it here</h5>
+                    <br />
+                    <form action="/admin" method="get">
+                        <input type="password" class="input-mini" id="admin_code" name="admin_code">
+                        <br />
+                        <br />
+                        <button type="submit" class="btn btn-info btn-large">Continue</button>
+                    </form>    
+                    <br />
+                    <h4>Or, <a href="/shelter/register">register</a> a new resource</h4>
+                    <br />
+                    <br />
+                    <h4><a href="/resources?kind=employment#volunteer">Click here</a> to find local volunteer opportunities</h4>
+                </center>
+
+            {% else %}
+                <center>
+                    <h3>{{ resource_object['name_1'] }}</h3>
+                    <h5>{{ resource_object['street_1'] }} {{ resource_object['city'] }} {{ resource_object['state'] }}</h5>
+                    <br />
+                    <br />
+
+                    {% if resource_object['resource_type'] == 'shelter' %}
+                        <h4>Current beds available:</h4>
+                    
+                        <br />
+                        <h1>{{ resource_object['beds'] }}</h1>
+                        <br />
+                        <br />
+                        <table>
+                            <tr>
+                                <td>
+                                    <a href="/admin?addbed=1" class="btn btn-success btn-large"><i class="icon-plus"></i></a>
+                                </td>
+                                <td>
+                                    <a href="/admin?delbed=1" class="btn btn-danger btn-large"><i class="icon-minus"></i></a>
+                                </td>
+                            </tr>
+                        </table>
+                        <br />
+                        <br />
+                        <br />
+
+                    {% end %}
+
+                    {% if access_level == 'admin' %}
+                        <a href="/admin/update" class="btn">Modify Info</a>
+                    {% end %}
+                    <br />
+                    <br />
+                    <a href="/admin?logout=1" class="btn">Logout</a>
+                    <br />
+                </center>
+            {% end %}
+            </div>
+        </div>
+        <div class="span3"><p></p></div>
+    </div>
+        
+
+</div>
+{% include 'footer.html' %}    

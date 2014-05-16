@@ -1,0 +1,45 @@
+{% include 'header.html' %}
+<body> 
+    <div data-role="page" id="outreach_menu">
+        <div data-theme="b" data-role="header" data-position="fixed">
+            <a data-role="button" data-rel="back" data-transition="fade" data-theme="b" href="/mobile" data-icon="back" data-iconpos="left" class="ui-btn-left">Back</a>
+        <h3>Homeless Helper</h3>
+        </div>
+        <div data-role="content" style="padding: 15px">
+        
+            {% if error is True %}
+                <center>
+                    <h3>Outreach (Beta)</h3>
+                    <p>Outreach enables social workers to create cases and work directly with people in need</p>
+                    <h3>Logon</h3>
+                </center>
+                <br />
+                <form action="/mobile/outreach" method="post">
+                    <center>
+                        Username: <input type="text" name="username" id="username" value="" />
+                        <br />
+                        Password: <input type="password" name="password" id="password" value="" />
+                        <br />
+                    </center>
+                    <center>
+                        <button type="submit" name="submit" class="btn btn-info">Logon</button>
+                    </center>
+                </form>
+            {% else %}
+
+                <br />
+
+                <div class="ui-grid-a">
+                	<div class="ui-block-b"><center><a href="/mobile/outreach/client/get"><img src="/static/images/mobile/admin.png" /></a></center></div>
+                	<div class="ui-block-b"><center><a href="/mobile/outreach/client/add"><img src="/static/images/mobile/admin.png" /></a></center></div>
+                </div><!-- /grid-a -->
+                <div class="ui-grid-a">
+                	<div class="ui-block-a"><center>Lookup Client</center></div>
+                	<div class="ui-block-b"><center>Add Client</center></div>
+                </div><!-- /grid-a -->
+            {% end %}
+
+        </div>
+    </div>
+</body>
+</html>

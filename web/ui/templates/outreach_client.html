@@ -1,0 +1,56 @@
+{% include 'header.html' %}
+<br />
+<div class="hero-unit">
+    {% include 'navbar.html' %} 
+    <br />
+    <a href="/" class="pull-left btn">Home</a>
+    <br /><br />
+    <div class="well">
+    <center>
+        <h3>Outreach (Beta)</h3>
+        <p>Outreach enables social workers to create cases and work directly with people in need</p>
+        <br /><br />
+
+    {% if error is True %}
+        <center><h3>Login</h3></center>
+        <br />
+        <br />
+        <form action="/outreach" method="post">
+            <center>
+                Username: <input type="text" name="username" id="username" value="" />
+                <br />
+                <br />
+                Password: <input type="password" name="password" id="password" value="" />
+                <br />
+                <br />
+            </center>
+            <center>
+                <button type="submit" name="submit" class="btn btn-info">Login</button>
+            </center>
+        </form>
+    {% else %}
+
+
+        <div class="row-fluid">
+            <div class="span2"><p></p></div>
+            <div class="span8">
+                <center>
+                <table class="table">
+                    <tr>
+                        <td><center><a href="/outreach/client/get"><img src="/static/images/mobile/magnify.png" /></a></center></td>
+                        <td><center><a href="/outreach/client/add"><img src="/static/images/mobile/compose.png" /></a></center></td>
+                    </tr>
+                    <tr>
+                        <th><center>Lookup Client</center></th>
+                        <th><center>Add Client</center></th>
+                    </tr>
+                </table>
+                </center>
+            </div>
+            <div class="span2"><p></p></div>
+        </div>
+    {% end %}
+    </div>
+
+</div>
+{% include 'footer.html' %}    

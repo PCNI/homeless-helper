@@ -1,0 +1,91 @@
+{% include 'header.html' %}
+<body> 
+    
+<div data-role="page" data-theme="b" id="splash" style="background-color: #fff;">
+<div class="splash">
+<br /><br />
+<br /><br />
+<br /><br />
+<br /><br />
+<center><img src="/static/images/OpenHMIS_splash.png" alt="splash" /></center>
+</div>
+</div>
+
+<script>
+$(function() {
+setTimeout(hideSplash, 1000);
+});
+
+function hideSplash() {
+$.mobile.changePage("#home", "fade");
+}
+</script>    
+    
+<div data-role="page" id="home">
+        <div data-theme="b" data-role="header" data-position="fixed">
+            <h3>Homeless Helper</h3>
+        </div>
+        <div data-role="content" style="padding: 15px">
+            <div class="ui-grid-a">
+            	<div class="ui-block-a"><center><a href="#" onClick="geo_shelter();"><img src="/static/images/mobile/shelter.png" /></a></center></div>
+            	<div class="ui-block-b"><center><a href="#" onClick="geo_food();"><img src="/static/images/mobile/food.png" /></a></center></div>
+            </div><!-- /grid-a -->
+            <div class="ui-grid-a">
+            	<div class="ui-block-a"><center>Shelter</center></div>
+            	<div class="ui-block-b"><center>Food</center></div>
+            </div><!-- /grid-a -->
+
+            <br />
+
+            <div class="ui-grid-a">
+            	<div class="ui-block-a"><center><a href="#" onClick="geo_medical();"><img src="/static/images/mobile/medical.png" /></a></center></div>
+            	<div class="ui-block-b"><center><a href="#" onClick="geo_hotlines();"><img src="/static/images/mobile/hotlines.png" /></a></center></div>
+            </div><!-- /grid-a -->
+            <div class="ui-grid-a">
+            	<div class="ui-block-a"><center>Medical</center></div>
+            	<div class="ui-block-b"><center>Hotlines</center></div>
+            </div><!-- /grid-a -->
+
+            <br />
+
+            <div class="ui-grid-a">
+            	<div class="ui-block-a"><center><a href="#" onClick="geo_legal();"><img src="/static/images/mobile/legal.png" /></a></center></div>
+            	<div class="ui-block-b"><center><a href="#" onClick="geo_social();"><img src="/static/images/mobile/social.png" /></a></center></div>
+            </div><!-- /grid-a -->
+            <div class="ui-grid-a">
+            	<div class="ui-block-a"><center>Legal</center></div>
+            	<div class="ui-block-b"><center>Social</center></div>
+            </div><!-- /grid-a -->
+
+            <br />
+
+            <div class="ui-grid-a">
+            	<div class="ui-block-a"><center><a href="#" onClick="geo_employment();"><img src="/static/images/mobile/employment.png" /></a></center></div>
+            	<div class="ui-block-b"><center><a href="/mobile/admin"><img src="/static/images/mobile/heart.png" /></a></center></div>
+            </div><!-- /grid-a -->
+            <div class="ui-grid-a">
+            	<div class="ui-block-a"><center>Employment</center></div>
+            	<div class="ui-block-b"><center>Caregiver</center></div>
+            </div><!-- /grid-a -->
+
+            <br />
+
+            <div class="ui-grid-a">
+            	<div class="ui-block-b"><center><a href="/mobile/outreach"><img src="/static/images/mobile/idcard.png" /></a></center></div>
+            	<div class="ui-block-b"><center></center></div>
+            </div><!-- /grid-a -->
+            <div class="ui-grid-a">
+            	<div class="ui-block-a"><center>Outreach</center></div>
+            	<div class="ui-block-b"><center></center></div>
+            </div><!-- /grid-a -->
+
+
+        </div>
+    </div>
+
+
+</body>
+
+
+</html>
+

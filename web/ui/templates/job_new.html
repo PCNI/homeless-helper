@@ -1,0 +1,107 @@
+{% include 'header.html' %}
+<br />
+<div class="hero-unit">
+    {% include 'navbar.html' %} 
+    <br /><br />
+
+    {% if done == '1' and job_id is not None %}
+        <center>
+            <p><strong>Thank you!</strong></p>
+            <p>Your post is now visible at <a href="/resource_profile?resource_id={{ job_id }}">http://homelesshelper.us/resource_profile?resource_id={{ job_id }}</p>
+        </center>
+    {% else %}
+        <div class="well">
+            <center><p>Post a new <strong>job</strong> or <strong>volunteer</strong> opportunity</p></center>
+            <br />
+            <br />
+           <div class="row-fluid">
+                <div class="span4"><p> </p></div>
+                <div class="span4">
+                    <form class="form-horizontal" id="newJobForm" action="/job/new" method="post">
+                        <div class="control-group">
+                            <label class="control-label" for="inputEmail">Opportunity Type</label>
+                            <div class="controls">
+                                <select name="opp_type" id="opp_type">
+                                    <option value="job">Job</option>
+                                    <option value="volunteer">Volunteer</option>
+                                </select>
+                            </div>
+                        </div>
+                    
+                        <div class="control-group">
+                            <label class="control-label" for="title">Title</label>
+                            <div class="controls">
+                                <input type="text" name="title" id="title" placeholder="Position Title">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="description">Description</label>
+                            <div class="controls">
+                                <textarea rows="4" name="description" id="description" placeholder="A brief description about the opportunity"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="address">Street Address</label>
+                            <div class="controls">
+                                <input type="text" name="address" id="address" placeholder="123 Main Street">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="city">City</label>
+                            <div class="controls">
+                                <input type="text" name="city" id="city" placeholder="Small Town">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="state">State</label>
+                            <div class="controls">
+                                <input type="text" class="input-mini" name="state" id="state" placeholder="NJ">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="zipcode">Zipcode</label>
+                            <div class="controls">
+                                <input type="text" class="input-small" name="zipcode" id="zipcode" placeholder="12345">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="phone">Phone number</label>
+                            <div class="controls">
+                                <input type="text" class="input-medium" name="phone" id="phone" placeholder="732-555-1234">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="url">Website</label>
+                            <div class="controls">
+                                <input type="text" name="url" id="url" placeholder="http://example.com">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="email">Email</label>
+                            <div class="controls">
+                                <input type="text" name="email" id="email" placeholder="job@example.com">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <div class="controls">
+                                <a href="javascript:history.go(-1)" class="btn btn-danger">Cancel</a>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            <div class="span4"><p> </p></div>            
+        </div>
+        </div>
+    {% end %}
+</div>
+{% include 'footer.html' %}    

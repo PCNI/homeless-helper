@@ -1,0 +1,28 @@
+{% include 'header.html' %}
+<br />
+<div class="hero-unit">
+    {% include 'navbar.html' %} 
+
+
+    <br /><br />
+    
+    <div class="well">
+
+    <br /><br />
+
+    <center>
+        <p>No <strong>{{ page_name }}</strong> resources found nearby. Please try another location.</p>
+        <br />
+        <br />
+        <form action="/resources" method="get">
+            <input type="hidden" name="kind" id="kind" value="{{ page_name }}" />            
+            <input type="text" name="query" class="input-xlarge search-query" placeholder="Enter an address">
+            <button type="submit" class="btn">Change Location</button>            
+        </form>
+    </center>
+    <br />    
+    <br />
+
+
+</div>
+{% include 'footer.html' %}    

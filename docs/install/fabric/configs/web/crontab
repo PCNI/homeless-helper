@@ -1,0 +1,1 @@
+@reboot /opt/homelesshelper/daemons/start-all.sh

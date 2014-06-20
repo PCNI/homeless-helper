@@ -1,1 +1,9 @@
-XXXX
+
+## homelesshelper: update job listings
+#0 9 * * * curl http://homelesshelper.us/api/tools/update_jobs >> /dev/null 2>&1
+
+## homelesshelper: update auto bed counts
+#0 1 * * * curl http://homelesshelper.us/api/tools/update_beds >> /dev/null 2>&1
+#0 13 * * * curl http://homelesshelper.us/api/tools/update_beds >> /dev/null 2>&1
+
+#0 * * * * curl http://homelesshelper.us/api/tools/update_shelters?admin_key=XXXX >> /dev/null 2>&1

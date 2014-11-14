@@ -5,7 +5,7 @@ Open Source Services Locator App -- see [homelesshelper.us](http://homelesshelpe
 
 This application is currently written to use the now-deprecated
 OpenHMIS API v1; see the [OpenHMIS API
-documentation](https://github.com/PCNI/OpenHMIS_V2/blob/master/API.md)
+documentation](https://github.com/PCNI/OpenHMIS/blob/master/API.md)
 for details.
 
 To serve Homeless Helper clients in the meantime, there is a server

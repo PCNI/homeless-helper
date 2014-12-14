@@ -79,19 +79,20 @@ class Tools():
         self.result['meta']['method_name'] = '/tools/update_shelters'
 
         ## check admin key
-        if self.config.ADMIN_KEY != admin_key:
-            self.result['meta']['status'] = 'Authentication failed'
-            return self.result
+        #if self.config.ADMIN_KEY != admin_key:
+        #    self.result['meta']['status'] = 'Authentication failed'
+        #    return self.result
 
         resource = Resource(self.db, self.config)
         openhmis = OpenHMIS(self.db, self.config)
 
         shelters = openhmis.get_shelters()
         counter = 0
+	bad = 0
         shelters_total = len(shelters)
         for s in shelters:
             if counter >= shelters_total: break 
-            print counter
+            #print counter  
             counter = counter + 1
             
             if resource.check_if_shelter_exists(s['ProgramName']) is False:
@@ -122,11 +123,12 @@ class Tools():
                                 program_address_full = '%s %s %s' % (program_address_street, program_address_city, program_address_zip)
                 
                 if program_address_full == 'NULL' or program_address_full == 'null' or program_address_full is None or program_address_full == 'None None None':
-                    print 'skipping - bad address: %s' % (program_address_full)
+                    print 'skipping - bad address: %s' % (program_name)
+		    self.db.rejectedPrograms.insert({"program_key":s['ProgramKey'] ,"programName": program_name , "Address": program_address_full })	
                     continue
 
                 print 'normalizing data'
-                ## normalize data
+                ## normalize data     
             
                 try:
                     numbers = re.findall(r'\d+', contact_phone)
@@ -134,28 +136,59 @@ class Tools():
                 except:
                     phone = contact_phone
             
-                try:
+		## Mod starts  program_address_city program_address_zip program_address_zip
+		try:
                     time.sleep(1)  ## too avoid google maps api rate limit
-
                     geo_data = self.lookup_geocode_data(program_address_full)
-                    if geo_data is False:
-                        print 'skipping due to False geocode result'
-                        continue
-                    lat = geo_data['lat']
-                    lng = geo_data['lng']
-                    full_address = geo_data['full_address']
-                    street_1 = geo_data['street_name']
-                    street_2 = ''
-                    city = geo_data['city']
-                    state = geo_data['state']
-                    zipcode = geo_data['zipcode']
-                except:
-                    print 'skipping - bad geocode'
-                    continue
+		    if geo_data is False:
+			if program_address_zip == 'NULL' or program_address_zip == 'null' or program_address_zip is None:
+			    print 'no zip'
+			    self.db.rejectedPrograms.insert({"program_key":s['ProgramKey'] ,"programName": program_name , "Address": program_address_full })
+		            bad = bad +1
+			    continue
+			print 'trying /shelter name/ zip for: %s'  % (program_name)
+ 			address_full = '%s %s %s' % (program_name,program_address_zip,"US")
+ 			geo_data = self.lookup_geocode_partial_data(address_full)
+			if geo_data is False:
+				print 'save program info to rejected table'
+ 				bad = bad +1
+				self.db.rejectedPrograms.insert({"program_key":s['ProgramKey'] ,"programName": program_name , "Address": program_address_full })
+		 		continue
+			self.db.updatedAddress.insert({"program_key":s['ProgramKey'] ,"programName": program_name , "Address": program_address_full })			
 
-                print 'inserting to db'
+ 		    print "Recording info"
+		    lat = geo_data['lat']
+                    lng = geo_data['lng']
+	            if geo_data['full_address'] is not None:                    	
+			full_address = geo_data['full_address']
+                    else:
+		    	full_address = program_address_full
+			
+		    if geo_data['street_name'] is not None:
+		       	street_1 = geo_data['street_name']
+                    else:	
+		    	street_1 = program_address_street
+			
+		    street_2 = ''
+		    if geo_data['city'] is not None:
+                       	city = geo_data['city']
+		    else:
+	            	city = program_address_city
+			
+                    #if geo_data[''] is not None:
+		    state = geo_data['state']
+		    zipcode = program_address_zip
+
+		except Exception as e:
+            		print 'Error:', e
+                    	continue	
+
+		#Mod ends
+
+                print 'inserting to db: %s'  % (program_name)
+
                 resource_type = 'shelter'                
-                va_status = 0
+		va_status = 0
                 name_1 = program_name
                 name_2 = agency_name
                 url = ''
@@ -217,7 +250,7 @@ class Tools():
                     ## send update to openhmis
                     openhmis.update_bed_units_occupied(s['ProgramKey'], db_result['beds_occupied'])
 
-
+        print bad
         self.result['meta']['status'] = 'OK'
         return self.result
         
@@ -268,7 +301,7 @@ class Tools():
             print address
             results = Geocoder.geocode(address)
             if results[0].valid_address is False:
-                print 'Invalid address'
+		print 'Invalid address'
                 return False
 
             ## parse address
@@ -282,11 +315,34 @@ class Tools():
             geo_data['full_address'] = results[0].formatted_address
             pprint(geo_data)
             return geo_data
-            
+	
         except Exception as e:
             print 'Geocoding failed:', e
             return False
-     
+    
+
+    def lookup_geocode_partial_data(self, address):
+        try:
+		
+	    print address
+            results = Geocoder.geocode(address)
+	     ## parse address
+            geo_data = {}
+            geo_data['lat'] = results[0].coordinates[0]
+            geo_data['lng'] = results[0].coordinates[1]
+            geo_data['street_name'] = results[0].route
+            geo_data['city'] = results[0].locality
+            geo_data['state'] = results[0].administrative_area_level_1
+            geo_data['zipcode'] = results[0].postal_code
+            geo_data['full_address'] = results[0].formatted_address
+            pprint(geo_data)
+            return geo_data
+
+        except Exception as e:
+            print 'Geocoding failed:', e
+            return False
+     	
+ 
     def generate_admin_code(self):
         looper = True
         while looper is True:
@@ -300,3 +356,5 @@ class Tools():
             return True
         else:
             return False
+
+

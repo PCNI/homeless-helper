@@ -8,7 +8,9 @@ import base64
 import string
 import re
 import math
+import logging
 from random import randint
+
 
 from pprint import pprint
 from pygeocoder import Geocoder
@@ -23,10 +25,12 @@ from emailsender import Email
 
 class Resource():
     
+
     def __init__(self, db, config):
         self.db = db
         self.config = config
         self.result = {'meta':{'method_name':'', 'status':''},'response':{}}
+
 
     def verify_admin(self, admin_code):
         self.result['meta']['method_name'] = '/resource/verify_admin'
@@ -34,10 +38,14 @@ class Resource():
         ## split code
         code = admin_code[:4]
         pin = admin_code[-4:]
+	
 
         ## query db
         resource_object = self.db.resource.find_one({'admin_code':code, 'admin_pin':pin})
-        if resource_object is None:
+        ##resource_object = self.db.resource.find({'admin_code':pin})
+	if resource_object is None:
+	    logging.info("object is null")
+	
             ## check for user pin
             resource_object2 = self.db.resource.find_one({'admin_code':code, 'user_pin':pin})            
             if resource_object2 is None:
@@ -76,6 +84,7 @@ class Resource():
         ## geo lookup
         if lat is None or lng is None:            
             try:
+		logging.info('geo lookup line 85')
                 address_query = '%s+%s+%s+%s' % (street_1, city, state, zipcode)
                 google_url = 'https://maps.googleapis.com/maps/api/geocode/json'
                 headers = {}
@@ -320,6 +329,7 @@ class Resource():
         ## geo lookup
         if lat is None or lng is None:            
             try:
+		logging.info('geo lookup line 330')
                 address_query = '%s+%s+%s' % (street_1, city, state)
                 google_url = 'https://maps.googleapis.com/maps/api/geocode/json'
                 headers = {}
@@ -441,7 +451,7 @@ class Resource():
         email_message = 'Resource type: %s\nName: %s\nEmail: %s\nAddress: %s\nCity: %s\nState: %s\nZipcode: %s\nHours: %s\nNotes: %s\nPhone number: %s\nWeb site: %s\nVA Status: %s\n' % (resource_type, name, email, address, city, state, zipcode, hours, notes, phone, url, va_status)
         approval_url = '\n\n%s/api/resource/complete_register?admin_key=%s&resource_type=%s&name=%s&email=%s&address=%s&city=%s&state=%s&zipcode=%s&hours=%s&notes=%s&phone=%s&url=%s&va_status=%s' % (self.config.BASE_URL, self.config.ADMIN_KEY, resource_type, urllib.quote_plus(name), urllib.quote_plus(email), urllib.quote_plus(address), urllib.quote_plus(city), urllib.quote_plus(state), urllib.quote_plus(zipcode), urllib.quote_plus(hours), urllib.quote_plus(notes), urllib.quote_plus(phone), urllib.quote_plus(url), va_status)
         email_message = email_message + approval_url
-        email_result = email_obj.send_text('wecare@homelesshelper.us', self.config.EMAIL_FROM_ADDRESS, 'HH -- New Resource!', email_message)
+        email_result = email_obj.send_text(self.config.EMAIL_FROM_ADDRESS, self.config.EMAIL_FROM_ADDRESS, 'HH -- New Resource!', email_message)
                         
         ## build response
         self.result['meta']['status'] = 'OK'
@@ -483,7 +493,7 @@ class Resource():
 
     def list(self, kind, lat, lng, radius):
         self.result['meta']['method_name'] = '/resource/list'
-
+	logging.info('Line 496')	
         if kind != 'hotline':
             if radius is None: 
                 radius = 2000
@@ -872,11 +882,12 @@ class Resource():
                 <Say voice="woman">The closest shelter to you is %s.</Say>
                 <Say voice="woman">They have %s beds available.</Say>
                 <Say voice="woman">Their phone number is %s.</Say>
+                 <Say voice="woman">Repeat their phone number is %s.</Say>
                 <Say voice="woman">Their address is %s in %s.</Say>
                 <Say voice="woman">Thank you for using Homeless Helper.</Say>
                 <Say voice="woman">Goodbye</Say>
                 <Hangup/>
-            </Response>''' % (resource_object['name_1'], resource_object['beds'], phone_number, resource_object['street_1'], resource_object['city'])
+            </Response>''' % (resource_object['name_1'], resource_object['beds'], phone_number,phone_number ,resource_object['street_1'], resource_object['city'])
         return response
 
     def send_sms_message(self, to_number, content):
@@ -915,6 +926,7 @@ class Resource():
                 
         try:
             ## geo lookup
+	    time.sleep(.5)	##Google rate limit   
             address_query = str(text_content)
             address_query = address_query
             url = 'https://maps.googleapis.com/maps/api/geocode/json'
@@ -979,7 +991,7 @@ class Resource():
         ## send email to admin
         email_obj = Email(self.db, self.config)
         email_message = '%s\n%s' % (name, email)
-        email_result = email_obj.send_text('wecare@homelesshelper.us', self.config.EMAIL_FROM_ADDRESS, 'Homeless Helper - API Key Request!', email_message)
+        email_result = email_obj.send_text(self.config.EMAIL_FROM_ADDRESS, self.config.EMAIL_FROM_ADDRESS, 'Homeless Helper - API Key Request!', email_message)
                         
         ## build response
         self.result['meta']['status'] = 'OK'
@@ -1010,6 +1022,7 @@ class Resource():
 
         ## geo lookup
         try:
+	    time.sleep(.5) ## max limit 2 request / seconds	
             address_query = '%s+%s+%s+%s' % (address, city, state, zipcode)
             google_url = 'https://maps.googleapis.com/maps/api/geocode/json'
             headers = {}

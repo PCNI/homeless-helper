@@ -1,4 +1,5 @@
 import time
+import logging
 from datetime import datetime, date
 import tornado.web
 from pprint import pprint
@@ -34,6 +35,33 @@ class JobNew(BaseHandler):
         kwargs['done'] = self.get_argument('done', None)
         kwargs['job_id'] = self.get_argument('job_id', None)        
         self.write(self.application.loader.load('job_new.html').generate(**kwargs))
+    
+    def post(self):
+        title = self.get_argument('title', None)
+        description = self.get_argument('description', '')
+        address = self.get_argument('address', '')
+        city = self.get_argument('city', '')
+        state = self.get_argument('state', '')
+        zipcode = self.get_argument('zipcode', '')
+        phone = self.get_argument('phone', '')
+        url = self.get_argument('url', '')
+        email = self.get_argument('email', '')
+        opp_type = self.get_argument('opp_type', '')
+
+        resource = Resource(self.db, config)
+        request_result = resource.new_job_post(title, description, address, city, state, zipcode, phone, url, email, opp_type)
+        if request_result['meta']['status'] == 'ERROR':
+            self.get_current_user()
+            kwargs = dict(self.application.static_kwargs)
+            kwargs['page_name'] = 'ios_job_new'
+            kwargs['config'] = config
+            kwargs['done'] = 0
+            kwargs['job_id'] = None
+            self.write(self.application.loader.load('job_new.html').generate(**kwargs))
+        else:
+            next_url = '/job/new?done=1&job_id=%s' % (request_result['response']['resource_id'])
+            self.redirect(next_url)	
+
 
 class IOSJobNew(BaseHandler):
     def get(self):        
@@ -129,7 +157,8 @@ class Faq(BaseHandler):
 
 class About(BaseHandler):
     def get(self):
-        self.get_current_user()
+      	print time.time()
+	self.get_current_user()
         kwargs = dict(self.application.static_kwargs)
         kwargs['page_name'] = 'about'
         kwargs['config'] = config
@@ -499,6 +528,7 @@ class Resources(BaseHandler):
         kwargs['config'] = config
         query = self.get_argument('query', None)
         radius = self.get_argument('radius', None)
+	logging.info("entered Resources line 504")
         if query is None or query == '':
             lat = self.get_argument('lat', None)
             lng = self.get_argument('lng', None)
@@ -568,7 +598,8 @@ class ResourceProfile(BaseHandler):
             self.redirect('/')
 
 class ShelterRegister(BaseHandler):
-    def get(self):        
+    def get(self):
+	logging.info("entered GET method")        
         self.get_current_user()
         kwargs = dict(self.application.static_kwargs)
         kwargs['page_name'] = 'shelter_register'
@@ -578,6 +609,7 @@ class ShelterRegister(BaseHandler):
         self.write(self.application.loader.load('shelter_register.html').generate(**kwargs))
 
     def post(self):
+	logging.info("entered POST method")
         resource_type = self.get_argument('resource_type', None)
         name = self.get_argument('name', '')
         email = self.get_argument('email', '')
@@ -592,7 +624,8 @@ class ShelterRegister(BaseHandler):
         va_status = self.get_argument('va_status', '')
         
         resource = Resource(self.db, config)
-        request_result = resource.request_shelter(resource_type, name, email, address, city, state, zipcode, hours, notes, phone, url, va_status)
+        logging.info(email)
+	request_result = resource.request_shelter(resource_type, name, email, address, city, state, zipcode, hours, notes, phone, url, va_status)
         if request_result['meta']['status'] == 'ERROR':
             self.get_current_user()
             kwargs = dict(self.application.static_kwargs)
